@@ -4,11 +4,19 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import morgan from "morgan";
+import cors from "cors";
 
 dotenv.config();
-
 const app = express();
 const port = process.env.PORT;
+
+const corsOption = {
+  origin: process.env.CORS_ORIGIN,
+  optionsSuccessStatus: 200,
+  credentials: true,
+};
+
+app.use(cors(corsOption));
 
 app.use(express.json());
 app.use(cookieParser());

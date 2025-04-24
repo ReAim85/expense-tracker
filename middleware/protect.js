@@ -4,8 +4,8 @@ import User from "../databse/db.js";
 export const protect = async (req, res, next) => {
   let token;
 
-  if (req.headers.Cookie && req.headers.authorization.startsWith("Bearer")) {
-    token = req.headers.authorization.split(" ")[1];
+  if (req.headers.Cookie || req.headers.authorization) {
+    token = req.headers.authorization;
   } else if (req.cookies && req.cookies) {
     token = req.cookies.authorization;
   }
