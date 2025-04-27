@@ -1,6 +1,7 @@
 import axios from "axios";
 import { atom, useAtom } from "jotai";
-import { API_BASE_URL } from "../config";
+import { BE_URL } from "../config";
+import { useCookie } from "../assets/context";
 
 const loginDataFormat = atom({
   email: "",
@@ -9,18 +10,17 @@ const loginDataFormat = atom({
 
 export const Login = () => {
   const [loginData, setLoginData] = useAtom(loginDataFormat);
+  const { setUser, user } = useCookie();
 
   const onClickHandler = async () => {
-    console.log(API_BASE_URL);
     try {
-      const res = await axios.post(
-        `${API_BASE_URL}/api/auth/login`,
-        loginData,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(res);
+      const res = await axios.post(`${BE_URL}/api/auth/login`, loginData, {
+        withCredentials: true,
+      });
+      if (res.status === 200 && res.data) {
+        setUser(res.data.userInfo.name);
+        console.log("login user is", user);
+      }
     } catch (err) {
       console.log(err);
     }
