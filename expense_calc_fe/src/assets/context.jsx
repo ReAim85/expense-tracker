@@ -7,11 +7,12 @@ import { BE_URL } from "../config.js";
 const CookieContext = createContext();
 
 export const useCookie = () => useContext(CookieContext);
-const CookieAtom = atom(null);
+const CookieAtom = atom("Vishal Jha");
+const loggedInAtom = atom(false);
 
 export const CookieProvider = ({ children }) => {
   const [user, setUser] = useAtom(CookieAtom);
-  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useAtom(loggedInAtom);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,12 +31,12 @@ export const CookieProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      navigate("/");
+      setIsLoggedIn(true);
     }
-  }, [user, navigate]);
+  }, [user]);
 
   return (
-    <CookieContext.Provider value={{ user, setUser }}>
+    <CookieContext.Provider value={{ user, setUser, isLoggedIn }}>
       {children}
     </CookieContext.Provider>
   );
