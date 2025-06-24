@@ -1,18 +1,19 @@
 import { createContext, useContext, useEffect } from "react";
 import { atom, useAtom } from "jotai";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BE_URL } from "../config.js";
 
 const CookieContext = createContext();
 
 export const useCookie = () => useContext(CookieContext);
-const CookieAtom = atom("Vishal Jha");
+const CookieAtom = atom("");
 const loggedInAtom = atom(false);
+const loading = atom(true);
 
 export const CookieProvider = ({ children }) => {
   const [user, setUser] = useAtom(CookieAtom);
   const [isLoggedIn, setIsLoggedIn] = useAtom(loggedInAtom);
+  const [authloading, setAuthLoading] = useAtom(loading);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,9 +22,10 @@ export const CookieProvider = ({ children }) => {
           withCredentials: true,
         });
         setUser(res.data.userInfo.name);
-        console.log("context res.data is this", res.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setAuthLoading(false);
       }
     };
     fetchUser();
@@ -36,7 +38,7 @@ export const CookieProvider = ({ children }) => {
   }, [user]);
 
   return (
-    <CookieContext.Provider value={{ user, setUser, isLoggedIn }}>
+    <CookieContext.Provider value={{ user, setUser, isLoggedIn, authloading }}>
       {children}
     </CookieContext.Provider>
   );

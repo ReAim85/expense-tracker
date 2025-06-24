@@ -1,5 +1,5 @@
 import express from "express";
-import User from "../databse/db.js";
+import { User } from "../databse/db.js";
 import { registerUserSchema, userLoginSchema } from "../middleware/zod.js";
 import JWT from "jsonwebtoken";
 import { protect } from "../middleware/protect.js";
@@ -92,6 +92,7 @@ router.post("/login", async (req, res) => {
     //send the response to the FE with token to add it into the local storage
     res.status(200).json({
       message: "logged in successfuly",
+      name: isUser.name,
       token: token,
     });
   } catch (err) {
@@ -108,6 +109,21 @@ router.get("/me", protect, async (req, res) => {
     res.status(200).json({ userInfo });
   } catch (err) {
     res.status(500).json({ message: "server error" });
+  }
+});
+
+router.post("/me", protect, async (req, res) => {
+  try {
+    const budgetUpdate = await User.findByIdAndUpdate(req.user, {
+      monthlyBudget: req.body.amount,
+    });
+    res.status(200).json({
+      NewBudget: budgetUpdate,
+    });
+  } catch (err) {
+    res.json({
+      err,
+    });
   }
 });
 

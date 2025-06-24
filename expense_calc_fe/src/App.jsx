@@ -10,6 +10,7 @@ import {
 import { Home } from "./pages/homepage.jsx";
 import ProtectedRoute from "./assets/protectedRoute.jsx";
 import { Expense } from "./pages/expensepage.jsx";
+import { History } from "./pages/history.jsx";
 
 const AuthRoute = ({ children }) => {
   const { user, isLoggedIn } = useCookie();
@@ -19,7 +20,7 @@ const AuthRoute = ({ children }) => {
 
 const App = () => {
   return (
-    <div className="bg-gradient-to-b from-blue-700 to-sky-200 h-screen">
+    <div className="bg-sky-200 mh-screen">
       <Provider>
         <Router>
           <CookieProvider>
@@ -45,6 +46,14 @@ const App = () => {
                 element={
                   <ProtectedRoute>
                     <Expense />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/history"
+                element={
+                  <ProtectedRoute>
+                    <History />
                   </ProtectedRoute>
                 }
               />

@@ -1,5 +1,6 @@
 import express from "express";
 import authRoutes from "./routes/auth-route.js";
+import expenseRoutes from "./routes/expense-route.js";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
+app.use("/api", expenseRoutes);
 
 await mongoose
   .connect(process.env.MONGO_URI)

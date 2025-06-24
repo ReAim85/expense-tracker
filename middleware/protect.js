@@ -1,5 +1,5 @@
 import JWT from "jsonwebtoken";
-import User from "../databse/db.js";
+import { User } from "../databse/db.js";
 
 export const protect = async (req, res, next) => {
   let token;
