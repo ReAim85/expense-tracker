@@ -2,6 +2,8 @@
 
 ## 📸 Demo
 
+https://github.com/user-attachments/assets/20eaeb49-4a72-4105-86e9-2482209fa83a
+
 ---
 
 A full-stack personal budgeting web app that helps users log expenses, visualize spending habits, and track savings. Built with modern technologies, this project emphasises a clean UI, real-time data updates, and an exceptional user experience.
